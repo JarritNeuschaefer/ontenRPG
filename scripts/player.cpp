@@ -1,10 +1,14 @@
 #include "player.h"
 
 Player::Player(sf::RenderWindow& window)
-    : window(window), speed(300.0f) {
+    : window(window) {
     shape.setRadius(20.0f);
     shape.setFillColor(sf::Color::Green);
-    shape.setPosition(100.0f, 100.0f);
+    shape.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f);
+}
+
+sf::Vector2f Player::getPosition() const {
+    return shape.getPosition();
 }
 
 void Player::update(float deltaTime) {
@@ -15,7 +19,12 @@ void Player::draw() {
     window.draw(shape);
 }
 
+float Player::getSpeed() const {
+    return speed;
+}
+
 void Player::handleInput(float deltaTime) {
+    
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         shape.move(0.0f, -speed * deltaTime);
     }
@@ -28,4 +37,5 @@ void Player::handleInput(float deltaTime) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
         shape.move(speed * deltaTime, 0.0f);
     }
+    
 }
