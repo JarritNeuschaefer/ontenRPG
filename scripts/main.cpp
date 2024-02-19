@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <player.h>
+#include <camera.h>
 
 int main() {
     // Initialisierung des Spiels
@@ -13,8 +14,6 @@ int main() {
     bool oPressed = false;
 
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Game");
-    float centerX = window.getSize().x / 2.f;
-    float centerY = window.getSize().y / 2.f;
 
     sf::Clock clock;
 
@@ -34,13 +33,10 @@ int main() {
     text.setString("TEST");
 
     Player player(window);
-
-    sf::View view;
-    view.setSize(1280.f, 720.f);
-    view.setCenter(centerX, centerY);
+    Camera cam(window);
 
     sf::RectangleShape rect(sf::Vector2f(gridSizeF, gridSizeF));
-    rect.setPosition(centerX + 10.f, centerY + 10.f);
+    rect.setPosition(window.getPosition().x / 2.f, window.getPosition().y / 2.f);
     rect.setFillColor(sf::Color::Cyan);
 
     while (window.isOpen()) {
@@ -53,8 +49,7 @@ int main() {
             else if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::O)
                 oPressed = false;
             else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::O && !oPressed) {
-                cameraMoving = !cameraMoving;
-                view.setCenter(player.getPosition());
+                cam.setActive(!cam.getActive());
                 oPressed = true;
             }
         }
@@ -62,11 +57,12 @@ int main() {
         // Aktualisierung
         float deltaTime = clock.restart().asSeconds();
         player.update(deltaTime);
+        cam.Update(deltaTime, player.getPosition());
 
         // Maus-Eingabe
         mousePosScreen = sf::Mouse::getPosition();
         mousePosWindow = sf::Mouse::getPosition(window);
-        window.setView(view);
+        window.setView(cam.getView());
         mousePosView = window.mapPixelToCoords(mousePosWindow);
         if (mousePosView.x >= 0.f) {
             mousePosGrid.x = mousePosView.x / gridSizeU;
@@ -83,25 +79,9 @@ int main() {
            << "grid: " << mousePosGrid.x << " " << mousePosGrid.y << "\n";
         text.setString(ss.str());
 
-        // Tastatureingabe
-        if (cameraMoving) {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-                view.move(-player.getSpeed() * deltaTime, 0.f);
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-                view.move(player.getSpeed() * deltaTime, 0.f);
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-                view.move(0.f, -player.getSpeed() * deltaTime);
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-                view.move(0.f, player.getSpeed() * deltaTime);
-            }
-        }
-
         // Rendering
         window.clear();
-        window.setView(view);
+        window.setView(cam.getView());
         // Spiellemente zeichnen
         window.draw(rect);
         player.draw();
