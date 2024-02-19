@@ -10,8 +10,9 @@ int main() {
     // Initialisierung des Spiels
     float gridSizeF = 100.f;
     unsigned gridSizeU = static_cast<unsigned>(gridSizeF);
-    bool cameraMoving = true;
+    bool debugWindow = false;
     bool oPressed = false;
+    bool pPressed = false;
 
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Game");
 
@@ -46,12 +47,22 @@ int main() {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
-            else if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::O)
-                oPressed = false;
-            else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::O && !oPressed) {
-                cam.setActive(!cam.getActive());
-                oPressed = true;
-            }
+            else if (event.type == sf::Event::KeyReleased)
+                {
+                    if(event.key.code == sf::Keyboard::O) oPressed = false;
+                    else if(event.key.code == sf::Keyboard::P) pPressed = false;
+                } 
+            else if (event.type == sf::Event::KeyPressed) 
+                {
+                    if(event.key.code == sf::Keyboard::O && !oPressed){
+                        cam.setActive(!cam.getActive());
+                        oPressed = true;
+                    }
+                    else if(event.key.code == sf::Keyboard::P && !pPressed){
+                        debugWindow = !debugWindow;
+                        pPressed = true;
+                    }
+                }
         }
 
         // Aktualisierung
@@ -72,12 +83,16 @@ int main() {
         }
         window.setView(window.getDefaultView());
 
-        std::stringstream ss;
-        ss << "Screen: " << mousePosScreen.x << " " << mousePosScreen.y << "\n"
-           << "window: " << mousePosWindow.x << " " << mousePosWindow.y << "\n"
-           << "view: " << mousePosView.x << " " << mousePosView.y << "\n"
-           << "grid: " << mousePosGrid.x << " " << mousePosGrid.y << "\n";
-        text.setString(ss.str());
+        if(debugWindow){
+            std::stringstream ss;
+            ss << "Screen: " << mousePosScreen.x << " " << mousePosScreen.y << "\n"
+                << "window: " << mousePosWindow.x << " " << mousePosWindow.y << "\n"
+                << "view: " << mousePosView.x << " " << mousePosView.y << "\n"
+                << "grid: " << mousePosGrid.x << " " << mousePosGrid.y << "\n";
+            text.setString(ss.str());
+        }
+        else text.setString("");
+        
 
         // Rendering
         window.clear();
