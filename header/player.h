@@ -10,13 +10,9 @@ public:
     sf::Vector2f getPosition() const;
     float getSpeed() const;
     sf::View& getView();
-
     void update(float deltaTime);
     void draw();
     void handleInput(float deltaTime);
-
-
-    
 
 private:
     sf::RenderWindow& window;
@@ -25,4 +21,3 @@ private:
 };
 
 #endif
-
