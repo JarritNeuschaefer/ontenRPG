@@ -6,7 +6,7 @@ DebugWindow::DebugWindow(sf::RenderWindow &window) : window(window), active(fals
 
     text.setFont(font);
     text.setCharacterSize(20.f);
-    text.setFillColor(sf::Color::White);
+    text.setFillColor(sf::Color::Blue);
     text.setPosition(window.getSize().x - (window.getSize().x / 4.5f), 2.f);
 }
 
