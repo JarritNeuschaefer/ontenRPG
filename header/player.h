@@ -16,7 +16,8 @@ public:
 
 private:
     sf::RenderWindow& window;
-    sf::CircleShape shape;
+    sf::Texture texture;
+    sf::Sprite sprite;
     float speed = 200.f;
 };
 

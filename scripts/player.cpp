@@ -2,13 +2,18 @@
 
 Player::Player(sf::RenderWindow& window)
     : window(window) {
-    shape.setRadius(20.0f);
-    shape.setFillColor(sf::Color::Green);
-    shape.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f);
+
+    if (!texture.loadFromFile("textur/spielfigur.png")) {
+
+    }
+    sprite.setTexture(texture);
+    sprite.setScale(2.f, 2.f);
+    sprite.setOrigin(texture.getSize().x / 2.f, texture.getSize().y / 2.f);
+    sprite.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f);
 }
 
 sf::Vector2f Player::getPosition() const {
-    return shape.getPosition();
+    return sprite.getPosition();
 }
 
 void Player::update(float deltaTime) {
@@ -16,7 +21,7 @@ void Player::update(float deltaTime) {
 }
 
 void Player::draw() {
-    window.draw(shape);
+    window.draw(sprite);
 }
 
 float Player::getSpeed() const {
@@ -26,16 +31,16 @@ float Player::getSpeed() const {
 void Player::handleInput(float deltaTime) {
     
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        shape.move(0.0f, -speed * deltaTime);
+        sprite.move(0.0f, -speed * deltaTime);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-        shape.move(-speed * deltaTime, 0.0f);
+        sprite.move(-speed * deltaTime, 0.0f);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        shape.move(0.0f, speed * deltaTime);
+        sprite.move(0.0f, speed * deltaTime);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        shape.move(speed * deltaTime, 0.0f);
+        sprite.move(speed * deltaTime, 0.0f);
     }
     
 }
