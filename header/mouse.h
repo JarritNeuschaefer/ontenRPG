@@ -1,6 +1,7 @@
 #ifndef MOUSE_H
 #define MOUSE_H
 #include <SFML/Graphics.hpp>
+#include "camera.h"
 
 class MouseData {
 public:

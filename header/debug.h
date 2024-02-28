@@ -5,12 +5,13 @@
 #include <sstream>
 #include <string>
 #include "mouse.h"
+#include "player.h"
 
 class DebugWindow
 {
 public:
     DebugWindow(sf::RenderWindow &window);
-    void update(const MouseData md);
+    void update(const MouseData md, Player player);
     void draw();
     void setActive(bool active);
     bool getActive();

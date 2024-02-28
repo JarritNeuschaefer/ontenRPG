@@ -35,10 +35,6 @@ int main()
     tileSelector.setOutlineThickness(1.f);
     tileSelector.setOutlineColor(sf::Color::Blue);
 
-    sf::RectangleShape rect(sf::Vector2f(map.getGridSizeF(), map.getGridSizeF()));
-    rect.setPosition(0.f, 0.f);
-    rect.setFillColor(sf::Color::Cyan);
-
     while (window.isOpen())
     {
         sf::Event event;
@@ -76,7 +72,7 @@ int main()
         player.update(deltaTime);
         cam.Update(deltaTime, player.getPosition());
         mousedata.update(deltaTime, cam, window, map.getGridSizeU());
-        debugWindow.update(mousedata);
+        debugWindow.update(mousedata, player);
 
         tileSelector.setPosition(mousedata.getGridPos().x * map.getGridSizeF(), mousedata.getGridPos().y * map.getGridSizeF());
 
@@ -86,10 +82,8 @@ int main()
         window.setView(cam.getView()); // Render Game Elements
 
         map.draw(cam);
-        window.draw(rect);
         window.draw(tileSelector);
         player.draw();
-
 
         window.setView(window.getDefaultView()); // Render UI
 

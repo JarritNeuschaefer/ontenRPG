@@ -10,16 +10,7 @@ DebugWindow::DebugWindow(sf::RenderWindow &window) : window(window), active(fals
     text.setPosition(window.getSize().x - (window.getSize().x / 4.5f), 2.f);
 }
 
-void DebugWindow::setActive(bool b)
-{
-    active = b;
-}
-bool DebugWindow::getActive()
-{
-    return active;
-}
-
-void DebugWindow::update(MouseData md)
+void DebugWindow::update(MouseData md, Player player)
 {
     if (active)
     {
@@ -28,8 +19,18 @@ void DebugWindow::update(MouseData md)
         ss << "Mouse Pos (Window): " << md.getWindowPos().x << ", " << md.getWindowPos().y << "\n";
         ss << "Mouse Pos (View): " << md.getViewPos().x << ", " << md.getViewPos().y << "\n";
         ss << "Mouse Pos (Grid): " << md.getGridPos().x << ", " << md.getGridPos().y << "\n";
+        ss << "Direction: " << player.getCurrentDirection() << "\n";
         debugText = ss.str();
     }
+}
+
+void DebugWindow::setActive(bool b)
+{
+    active = b;
+}
+bool DebugWindow::getActive()
+{
+    return active;
 }
 
 void DebugWindow::draw()
