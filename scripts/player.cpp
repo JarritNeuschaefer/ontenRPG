@@ -1,4 +1,5 @@
 #include "player.h"
+#include <cmath>
 
 float elapsedAnimationTime = 0.0f;
 int currentFrame = 0;
@@ -107,30 +108,23 @@ Player::Direction Player::getCurrentDirection()
 }
 
 void Player::handleInput(float deltaTime) {
-    
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        sprite.move(0.0f, -speed * deltaTime);
-        if(!sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-        {
-            setDirection(Up);
-        }
-        
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        sprite.move(0.0f, speed * deltaTime);
+    sf::Vector2f movement(0.0f, 0.0f);
 
-        if(!sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) { movement.y -= 1.f; }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) { movement.y += 1.f; }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) { movement.x -= 1.f; }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) { movement.x += 1.f; }
+    float length = std::sqrt(movement.x * movement.x + movement.y * movement.y);
+    if (length != 0.0f) 
         {
-            setDirection(Down);
+            movement /= length;
         }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-        sprite.move(-speed * deltaTime, 0.0f);
-        setDirection(Left);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        sprite.move(speed * deltaTime, 0.0f);
-        setDirection(Right);
-    }
+
+sprite.move(movement * speed * deltaTime);
+
+if (movement.x < 0.0f) {setDirection(Left);} 
+else if (movement.x > 0.0f) {setDirection(Right);}
+if (movement.y < 0.0f   && movement.x == 0) {setDirection(Up);} 
+else if (movement.y > 0.0f   && movement.x == 0) {setDirection(Down);}
     
 }
