@@ -7,18 +7,27 @@ class Map
 {
     public:
         Map(sf::RenderWindow& window);
-        void Update();
         void draw(Camera cam);
         float getGridSizeF();
         unsigned getGridSizeU();
+        void loadTextures();
+        void transposeMap();
+        void loadTilemapFromFile(const std::string& filename);
         
     private:
         sf::RenderWindow& window;
-        std::vector<std::vector<sf::RectangleShape>> tileMap;
+        std::vector<std::vector<sf::Sprite>> tileMap;
+        sf::Texture tilemapTexture;
+        sf::Sprite tilemapSprite;
+        std::vector<std::vector<sf::Texture>> textures;
+        std::vector<std::vector<int>> mapData;
         float gridSizeF;
         unsigned gridSizeU;
-        const int mapSizeX = 100;
-        const int mapSizeY = 70;
+        int mapSizeX = 10;
+        int mapSizeY = 10;
+
+        int sheetSizeX = 6;
+        int sheetSizeY = 6;
         int fromX = 0;
         int toX = 0;
         int fromY = 0;

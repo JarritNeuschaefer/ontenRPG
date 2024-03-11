@@ -1,5 +1,6 @@
 #include "player.h"
 #include <cmath>
+#include <iostream>
 
 float elapsedAnimationTime = 0.0f;
 int currentFrame = 0;
