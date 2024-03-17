@@ -23,11 +23,11 @@ class Map
         std::vector<std::vector<int>> mapData;
         float gridSizeF;
         unsigned gridSizeU;
-        int mapSizeX = 10;
-        int mapSizeY = 10;
+        int mapSizeX = 30;
+        int mapSizeY = 30;
 
-        int sheetSizeX = 6;
-        int sheetSizeY = 6;
+        int sheetRows = 8;
+        int sheetCols = 10;
         int fromX = 0;
         int toX = 0;
         int fromY = 0;
