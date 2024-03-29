@@ -9,6 +9,13 @@ int row = 0;
 int coloumn = 0;
 int animationSpeed = 2;
 
+//keychecks
+static bool e_pressed = false;
+static bool q_pressed = false;
+static bool c_pressed = false;
+
+static bool wasKeyPressed[sf::Keyboard::KeyCount] = {false};
+
 Player::Player(sf::RenderWindow& window)
     : window(window) {    
 if (texture.loadFromFile("textur/character_sheet.png")) 
@@ -121,10 +128,19 @@ void Player::handleInput(float deltaTime) {
         {
             movement /= length;
         }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::E)) 
-    {
-        print("e was pressed");
-    }
+    
+    //key listeners
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !e_pressed) {e_pressed = true;       
+        print("E was pressed");}
+    else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::E) && e_pressed) {e_pressed = false;}
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && !q_pressed) {q_pressed = true;       
+        print("Q was pressed");}
+    else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && q_pressed) {q_pressed = false;}
+    
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) && !c_pressed) {c_pressed = true;       
+        print("C was pressed");}
+    else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::C) && c_pressed) {c_pressed = false;}
 
 sprite.move(movement * speed * deltaTime);
 
