@@ -1,6 +1,6 @@
-#include "debug.h"
+#include "info.h"
 
-DebugWindow::DebugWindow(sf::RenderWindow &window) : window(window), active(false)
+InfoWindow::InfoWindow(sf::RenderWindow &window) : window(window), active(false)
 {
     font.loadFromFile("fonts/SHPinscher.otf");
 
@@ -10,7 +10,7 @@ DebugWindow::DebugWindow(sf::RenderWindow &window) : window(window), active(fals
     text.setPosition(window.getSize().x - (window.getSize().x / 4.5f), 2.f);
 }
 
-void DebugWindow::update(MouseData md, Player player)
+void InfoWindow::update(MouseData md, Player player)
 {
     if (active)
     {
@@ -24,16 +24,16 @@ void DebugWindow::update(MouseData md, Player player)
     }
 }
 
-void DebugWindow::setActive(bool b)
+void InfoWindow::setActive(bool b)
 {
     active = b;
 }
-bool DebugWindow::getActive()
+bool InfoWindow::getActive()
 {
     return active;
 }
 
-void DebugWindow::draw()
+void InfoWindow::draw()
 {
     if (active)
     {

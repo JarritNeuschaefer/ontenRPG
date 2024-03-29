@@ -34,3 +34,4 @@ clean:
 # Ausführen des Programms
 run:
 	./$(TARGET)
+

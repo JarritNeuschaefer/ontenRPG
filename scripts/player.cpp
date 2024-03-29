@@ -1,6 +1,7 @@
 #include "player.h"
 #include <cmath>
 #include <iostream>
+#include <log.h>
 
 float elapsedAnimationTime = 0.0f;
 int currentFrame = 0;
@@ -111,15 +112,19 @@ Player::Direction Player::getCurrentDirection()
 void Player::handleInput(float deltaTime) {
     sf::Vector2f movement(0.0f, 0.0f);
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) { movement.y -= 1.f; }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) { movement.y += 1.f; }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) { movement.x -= 1.f; }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) { movement.x += 1.f; }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) { movement.y -= 1.f;}
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) { movement.y += 1.f;}
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) { movement.x -= 1.f;}
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) { movement.x += 1.f;}
     float length = std::sqrt(movement.x * movement.x + movement.y * movement.y);
     if (length != 0.0f) 
         {
             movement /= length;
         }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::E)) 
+    {
+        print("e was pressed");
+    }
 
 sprite.move(movement * speed * deltaTime);
 

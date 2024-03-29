@@ -7,8 +7,9 @@
 #include <player.h>
 #include <camera.h>
 #include <mouse.h>
-#include <debug.h>
+#include <info.h>
 #include <map.h>
+#include <log.h>
 
 int main()
 {
@@ -17,6 +18,7 @@ int main()
 
     bool oPressed = false;
     bool pPressed = false;
+    bool enterPressed = false;
 
 
     sf::RenderWindow window(sf::VideoMode(1280, 720), "Onten RPG");
@@ -27,7 +29,9 @@ int main()
     Map map(window);
     Player player(window);
     Camera cam(window);
-    DebugWindow debugWindow(window);
+    InfoWindow infoWindow(window);
+    Log::getInstance(window, 10.f, (window.getSize().y - 200.f));
+    
 
     //game elements
     sf::RectangleShape tileSelector(sf::Vector2f(map.getGridSizeF(), map.getGridSizeF()));
@@ -39,7 +43,7 @@ int main()
     {
         sf::Event event;
         while (window.pollEvent(event))
-        {
+{
             // Ereignisbehandlung
             if (event.type == sf::Event::Closed)
             {
@@ -47,10 +51,18 @@ int main()
             }
             else if (event.type == sf::Event::KeyReleased)
             {
-                if (event.key.code == sf::Keyboard::O)
+                if (event.key.code == sf::Keyboard::O && oPressed)
+                {
                     oPressed = false;
+                }
                 else if (event.key.code == sf::Keyboard::P)
+                {
                     pPressed = false;
+                }
+                else if (event.key.code == sf::Keyboard::Enter)
+                {
+                    enterPressed = false;
+                }
             }
             else if (event.type == sf::Event::KeyPressed)
             {
@@ -61,18 +73,24 @@ int main()
                 }
                 else if (event.key.code == sf::Keyboard::P && !pPressed)
                 {
-                    debugWindow.setActive(!debugWindow.getActive());
+                    infoWindow.setActive(!infoWindow.getActive());
                     pPressed = true;
+                }
+                else if (event.key.code == sf::Keyboard::Enter && !enterPressed)
+                {
+                    Log::getInstance(window, 10.f, (window.getSize().y - 200.f)).setActive(!Log::getInstance(window, 10.f, (window.getSize().y - 200.f)).getActive());
+                    enterPressed = true;
                 }
             }
         }
+
 
         // Aktualisierung
         float deltaTime = clock.restart().asSeconds();
         player.update(deltaTime);
         cam.Update(deltaTime, player.getPosition());
         mousedata.update(deltaTime, cam, window, map.getGridSizeU());
-        debugWindow.update(mousedata, player);
+        infoWindow.update(mousedata, player);
 
         tileSelector.setPosition(mousedata.getGridPos().x * map.getGridSizeF(), mousedata.getGridPos().y * map.getGridSizeF());
 
@@ -87,7 +105,8 @@ int main()
 
         window.setView(window.getDefaultView()); // Render UI
 
-        debugWindow.draw();
+        infoWindow.draw();
+        Log::getInstance(window, 10.f, (window.getSize().y - 200.f)).draw();
         window.display();
     }
 

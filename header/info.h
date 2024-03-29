@@ -1,5 +1,5 @@
-#ifndef DEBUG_H
-#define DEBUG_H
+#ifndef INFO_H
+#define INFO_H
 
 #include <SFML/Graphics.hpp>
 #include <sstream>
@@ -7,10 +7,10 @@
 #include "mouse.h"
 #include "player.h"
 
-class DebugWindow
+class InfoWindow
 {
 public:
-    DebugWindow(sf::RenderWindow &window);
+    InfoWindow(sf::RenderWindow &window);
     void update(const MouseData md, Player player);
     void draw();
     void setActive(bool active);
