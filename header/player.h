@@ -14,9 +14,11 @@ public:
     void animate(float deltaTime);
     void draw();
     void handleInput(float deltaTime);
+    void loadTextures(sf::RenderWindow& window);
     void changeTexture(int row, int coluomn);
     enum Direction {Up,Down,Left,Right};
     void setDirection(Direction newDirection);
+    void prepare(sf::Sprite& sprite, sf::Texture& texture, sf::RenderWindow& window);
     Direction getCurrentDirection();
     
 
@@ -27,8 +29,19 @@ private:
     Direction currentDirection;
     
     sf::RenderWindow& window;
-    sf::Texture texture;
-    sf::Sprite sprite;
+
+    sf::Texture characterTexture;
+    sf::Texture pantsTexture;
+    sf::Texture shirtTexture;
+    sf::Texture shoesTexture;
+    sf::Texture hairTexture;
+
+    sf::Sprite characterSprite;
+    sf::Sprite pantsSprite;
+    sf::Sprite shirtSprite;
+    sf::Sprite shoesSprite;
+    sf::Sprite hairSprite;
+
     
 };
 
