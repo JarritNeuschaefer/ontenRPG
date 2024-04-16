@@ -7,7 +7,7 @@ float elapsedAnimationTime = 0.0f;
 int currentFrame = 0;
 int row = 0;
 int coloumn = 0;
-int animationSpeed = 2;
+float animationSpeed = 3.5f;
 
 //keychecks
 static bool e_pressed = false;
@@ -29,12 +29,12 @@ Player::Player(sf::RenderWindow& window)
 
 void Player::loadTextures(sf::RenderWindow& window)
 {
-    if (characterTexture.loadFromFile("textur/character_sheet.png")) 
+    if (characterTexture.loadFromFile("textur/player_base.png")) 
         prepare(characterSprite, characterTexture, window);
     else 
         characterSprite.setColor(sf::Color::Magenta);
 
-    if (hairTexture.loadFromFile("textur/hair_1.png")) 
+    /*if (hairTexture.loadFromFile("textur/hair_1.png")) 
         prepare(hairSprite, hairTexture, window);
     else 
         hairSprite.setColor(sf::Color::Magenta);
@@ -52,7 +52,7 @@ void Player::loadTextures(sf::RenderWindow& window)
     if (shoesTexture.loadFromFile("textur/shoes_1.png")) 
         prepare(shoesSprite, shoesTexture, window);
     else 
-        shoesSprite.setColor(sf::Color::Magenta);
+        shoesSprite.setColor(sf::Color::Magenta);*/
 }
 
 
@@ -71,13 +71,13 @@ sf::Vector2f Player::getPosition() const {
     return characterSprite.getPosition();
 }
 
-void Player::changeTexture(int frame, int direction)
+void Player::changeTexture(int row, int col)
 {
-    characterSprite.setTextureRect(sf::IntRect(frame * 32, direction * 64, 32, 64));
-    hairSprite.setTextureRect(sf::IntRect(frame * 32, direction * 64, 32, 64));
-    shirtSprite.setTextureRect(sf::IntRect(frame * 32, direction * 64, 32, 64));
-    pantsSprite.setTextureRect(sf::IntRect(frame * 32, direction * 64, 32, 64));
-    shoesSprite.setTextureRect(sf::IntRect(frame * 32, direction * 64, 32, 64));
+    characterSprite.setTextureRect(sf::IntRect(row * 32, col * 64, 32, 64));
+    /*hairSprite.setTextureRect(sf::IntRect(row * 32, col * 64, 32, 64));
+    shirtSprite.setTextureRect(sf::IntRect(row * 32, col * 64, 32, 64));
+    pantsSprite.setTextureRect(sf::IntRect(row * 32, col * 64, 32, 64));
+    shoesSprite.setTextureRect(sf::IntRect(row * 32, col * 64, 32, 64));*/
 }
 
 void Player::update(float deltaTime) {
@@ -88,9 +88,9 @@ void Player::update(float deltaTime) {
 void Player::draw() {
     window.draw(characterSprite);
     if(hair_on) window.draw(hairSprite);
-    if(shirt_on) window.draw(shirtSprite);
+    /*if(shirt_on) window.draw(shirtSprite);
     if(pants_on) window.draw(pantsSprite);
-    if(shoes_on) window.draw(shoesSprite);
+    if(shoes_on) window.draw(shoesSprite);*/
 }
 
 float Player::getSpeed() const {
@@ -115,17 +115,17 @@ void Player::animate(float deltaTime)
             column = 1;
             characterSprite.setScale(-size, size);
             hairSprite.setScale(-size, size);
-            shirtSprite.setScale(-size, size);
+            /*shirtSprite.setScale(-size, size);
             pantsSprite.setScale(-size, size);
-            shoesSprite.setScale(-size, size);
+            shoesSprite.setScale(-size, size);*/
             break;
         case Right:
             column = 1;
             characterSprite.setScale(size, size);
-            hairSprite.setScale(size, size);
+            /*hairSprite.setScale(size, size);
             shirtSprite.setScale(size, size);
             pantsSprite.setScale(size, size);
-            shoesSprite.setScale(size, size);
+            shoesSprite.setScale(size, size);*/
             break;
     }
      if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
@@ -133,9 +133,12 @@ void Player::animate(float deltaTime)
         sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
         sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 
-        int currentFrame = static_cast<int>(elapsedAnimationTime / (animationSpeed/10.f)) % 4;
+        float frameTime = 1/(animationSpeed * speed);
+        int runAnimationength = 7;
 
-        switch (currentFrame) {
+        int currentFrame = static_cast<int>(elapsedAnimationTime / frameTime) % runAnimationength + 1;
+        row = currentFrame;
+        /*switch (currentFrame) {
             case 0:
             case 2:
                 row = 0;
@@ -148,7 +151,7 @@ void Player::animate(float deltaTime)
             case 3:
                 row = 2;
                 break;
-        }
+        }*/
 
         changeTexture(column, row);
     }
@@ -196,11 +199,11 @@ void Player::handleInput(float deltaTime) {
         shirt_on = !shirt_on;}
     else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::C) && c_pressed) {c_pressed = false;}
 
-characterSprite.move(movement * speed * deltaTime);
-hairSprite.move(movement * speed * deltaTime);
+characterSprite.move(movement * (speed * 100.f) * deltaTime);
+/*hairSprite.move(movement * speed * deltaTime);
 shirtSprite.move(movement * speed * deltaTime);
 pantsSprite.move(movement * speed * deltaTime);
-shoesSprite.move(movement * speed * deltaTime);
+shoesSprite.move(movement * speed * deltaTime);*/
 
 if (movement.x < 0.0f) {setDirection(Left);} 
 else if (movement.x > 0.0f) {setDirection(Right);}

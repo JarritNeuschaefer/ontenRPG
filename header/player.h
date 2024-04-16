@@ -23,7 +23,7 @@ public:
     
 
 private:
-    float speed = 300.f;
+    float speed = 3.f;
     float size = 2.f;
 
     Direction currentDirection;

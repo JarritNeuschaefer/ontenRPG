@@ -34,10 +34,19 @@ int main()
     
 
     //game elements
+
     sf::RectangleShape tileSelector(sf::Vector2f(map.getGridSizeF(), map.getGridSizeF()));
     tileSelector.setFillColor(sf::Color::Transparent);
     tileSelector.setOutlineThickness(1.f);
     tileSelector.setOutlineColor(sf::Color::Blue);
+
+    //cursor
+
+    sf::Texture cursorTexture;
+    if (!cursorTexture.loadFromFile("textur/cursor.png")) { return EXIT_FAILURE; }
+    sf::Cursor cursor;
+    if (!cursor.loadFromPixels(cursorTexture.copyToImage().getPixelsPtr(), cursorTexture.getSize(), {0, 0})) { return EXIT_FAILURE;}
+    window.setMouseCursor(cursor);
 
     while (window.isOpen())
     {
