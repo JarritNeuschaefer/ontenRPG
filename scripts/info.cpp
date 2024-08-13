@@ -2,15 +2,23 @@
 
 InfoWindow::InfoWindow(sf::RenderWindow &window) : window(window), active(false)
 {
+    xPosition = window.getSize().x - (window.getSize().x / 4.5f);
+    yPosition = 2.f;
+
     font.loadFromFile("fonts/SHPinscher.otf");
 
     text.setFont(font);
     text.setCharacterSize(20.f);
-    text.setFillColor(sf::Color::Blue);
-    text.setPosition(window.getSize().x - (window.getSize().x / 4.5f), 2.f);
+    text.setFillColor(sf::Color::Cyan);
+    text.setPosition(xPosition, yPosition);
+
+    sf::Color backgroundColor = sf::Color(0, 0, 0, 164);
+    background.setSize(sf::Vector2f(260.f, 230.f));
+    background.setFillColor(backgroundColor);
+    background.setPosition(xPosition, yPosition);
 }
 
-void InfoWindow::update(MouseData md, Player player)
+void InfoWindow::update(MouseData md, Player player, unsigned gridSizeU)
 {
     if (active)
     {
@@ -20,6 +28,10 @@ void InfoWindow::update(MouseData md, Player player)
         ss << "Mouse Pos (View): " << md.getViewPos().x << ", " << md.getViewPos().y << "\n";
         ss << "Mouse Pos (Grid): " << md.getGridPos().x << ", " << md.getGridPos().y << "\n";
         ss << "Direction: " << player.getCurrentDirection() << "\n";
+        ss << "Player Position x: " << player.getPosition().x << "\n";
+        ss << "Player Position y: " << player.getPosition().y << "\n";
+        ss << "Player Grid Position x: " << (int)player.getPosition().x / gridSizeU << "\n";
+        ss << "Player Grid Position y: " << ((int)player.getPosition().y + 46) / gridSizeU << "\n";
         debugText = ss.str();
     }
 }
@@ -38,6 +50,7 @@ void InfoWindow::draw()
     if (active)
     {
         text.setString(debugText);
+        window.draw(background);
         window.draw(text);
     }
 }

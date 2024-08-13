@@ -19,6 +19,7 @@ Log::Log(sf::RenderWindow &window, float xPosition, float yPosition)
     background.setSize(sf::Vector2f(400.f, 185.f));
     background.setFillColor(backgroundColor);
     background.setPosition(xPosition, yPosition);
+    setActive(false);
 }
 
 void Log::write(std::string message)

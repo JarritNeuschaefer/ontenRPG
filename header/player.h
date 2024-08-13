@@ -32,13 +32,13 @@ private:
 
     sf::Texture characterTexture;
     sf::Texture pantsTexture;
-    sf::Texture shirtTexture;
+    sf::Texture topTexture;
     sf::Texture shoesTexture;
     sf::Texture hairTexture;
 
     sf::Sprite characterSprite;
     sf::Sprite pantsSprite;
-    sf::Sprite shirtSprite;
+    sf::Sprite topSprite;
     sf::Sprite shoesSprite;
     sf::Sprite hairSprite;
 

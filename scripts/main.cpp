@@ -14,6 +14,7 @@
 int main()
 {
     // Initialisierung des Spiels
+    //custom Shortcut in vsCode: STRG + SHIFT + B
 
 
     bool oPressed = false;
@@ -99,7 +100,7 @@ int main()
         player.update(deltaTime);
         cam.Update(deltaTime, player.getPosition());
         mousedata.update(deltaTime, cam, window, map.getGridSizeU());
-        infoWindow.update(mousedata, player);
+        infoWindow.update(mousedata, player, map.getGridSizeU());
 
         tileSelector.setPosition(mousedata.getGridPos().x * map.getGridSizeF(), mousedata.getGridPos().y * map.getGridSizeF());
 
