@@ -3,6 +3,7 @@
 #include <SFML/System.hpp>
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 
 #include <player.h>
 #include <camera.h>
@@ -72,6 +73,10 @@ int main()
                 {
                     enterPressed = false;
                 }
+                else if (event.key.code == sf::Keyboard::I)
+                {
+                    //print(std::to_string(map.getIDFromTile(((int)player.getPosition().x / map.getGridSizeU()), ((int)player.getPosition().y / map.getGridSizeU()))));
+                }
             }
             else if (event.type == sf::Event::KeyPressed)
             {
@@ -93,13 +98,18 @@ int main()
             }
         }
 
+        //variable for the infowindow
+        unsigned gridSizeU = map.getGridSizeU();
+        int PT_X = std::max(0, static_cast<int>(player.getPosition().x / gridSizeU));
+        int PT_Y = std::max(0, static_cast<int>((player.getPosition().y + 46) / gridSizeU));
+        int PT_ID = map.getIDFromTile(PT_X, PT_Y);
 
         // updates
         float deltaTime = clock.restart().asSeconds();
         player.update(deltaTime);
         cam.Update(deltaTime, player.getPosition());
-        mousedata.update(deltaTime, cam, window, map.getGridSizeU());
-        infoWindow.update(mousedata, player, map.getGridSizeU());
+        mousedata.update(deltaTime, cam, window, gridSizeU);
+        infoWindow.update(mousedata, player, gridSizeU, PT_ID, PT_X, PT_Y);
 
         tileSelector.setPosition(mousedata.getGridPos().x * map.getGridSizeF(), mousedata.getGridPos().y * map.getGridSizeF());
 

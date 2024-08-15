@@ -13,12 +13,12 @@ InfoWindow::InfoWindow(sf::RenderWindow &window) : window(window), active(false)
     text.setPosition(xPosition, yPosition);
 
     sf::Color backgroundColor = sf::Color(0, 0, 0, 164);
-    background.setSize(sf::Vector2f(260.f, 230.f));
+    background.setSize(sf::Vector2f(280.f, 230.f));
     background.setFillColor(backgroundColor);
     background.setPosition(xPosition, yPosition);
 }
 
-void InfoWindow::update(MouseData md, Player player, unsigned gridSizeU)
+void InfoWindow::update(MouseData md, Player player, unsigned gridSizeU, int PT_ID, int PT_X, int PT_Y)
 {
     if (active)
     {
@@ -28,10 +28,10 @@ void InfoWindow::update(MouseData md, Player player, unsigned gridSizeU)
         ss << "Mouse Pos (View): " << md.getViewPos().x << ", " << md.getViewPos().y << "\n";
         ss << "Mouse Pos (Grid): " << md.getGridPos().x << ", " << md.getGridPos().y << "\n";
         ss << "Direction: " << player.getCurrentDirection() << "\n";
-        ss << "Player Position x: " << player.getPosition().x << "\n";
-        ss << "Player Position y: " << player.getPosition().y << "\n";
-        ss << "Player Grid Position x: " << (int)player.getPosition().x / gridSizeU << "\n";
-        ss << "Player Grid Position y: " << ((int)player.getPosition().y + 46) / gridSizeU << "\n";
+        ss << "Player Position x: " << player.getPosition().x << ", " << player.getPosition().y << "\n";
+        ss << "Player Tile Position: " << PT_X << ", " << PT_Y <<"\n";
+        ss << "Player tile ID: " << PT_ID <<"\n";
+        
         debugText = ss.str();
     }
 }

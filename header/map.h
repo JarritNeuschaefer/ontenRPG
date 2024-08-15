@@ -13,6 +13,7 @@ class Map
         void loadTextures();
         void transposeMap();
         void loadTilemapFromFile(const std::string& filename);
+        int getIDFromTile(int x, int y);
         
     private:
         sf::RenderWindow& window;

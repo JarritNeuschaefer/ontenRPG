@@ -12,7 +12,7 @@ class InfoWindow
 {
 public:
     InfoWindow(sf::RenderWindow &window);
-    void update(const MouseData md, Player player, unsigned gridSizeU);
+    void update(const MouseData md, Player player, unsigned gridSizeU, int PT_ID, int PT_X, int PT_Y);
     void draw();
     void setActive(bool active);
     bool getActive();

@@ -102,5 +102,23 @@ void Map::draw(Camera cam)
     }
 }
 
+int Map::getIDFromTile(int x, int y)
+{
+    if (x >= 0 && x < mapSizeX && y >= 0 && y < mapSizeY) {
+        const sf::Texture* texture = tileMap[y][x].getTexture();
+        if (texture) {
+            for (int i = 0; i < sheetRows; ++i) {
+                for (int j = 0; j < sheetCols; ++j) {
+                    if (texture == &textures[i][j]) {
+                        return i * sheetCols + j;
+                    }
+                }
+            }
+        }
+        return -1;
+    } else {
+        return -1;
+    }
+}
 float Map::getGridSizeF() {return gridSizeF;}
 unsigned Map::getGridSizeU() {return gridSizeU;}
