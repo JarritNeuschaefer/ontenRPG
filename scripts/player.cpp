@@ -39,22 +39,26 @@ void Player::setDirection(Direction newDirection) { currentDirection = newDirect
 // loads the Textures from the texture folder and prepares them
 void Player::loadTextures(sf::RenderWindow &window)
 {
-    if (characterTexture.loadFromFile("textur/player_base.png"))
+    if (characterTexture.loadFromFile("texture/player_base.png"))
         prepare(characterSprite, characterTexture, window);
     else
         characterSprite.setColor(sf::Color::Magenta);
-    if (topTexture.loadFromFile("textur/player_top.png"))
+    if (topTexture.loadFromFile("texture/player_top.png"))
         prepare(topSprite, topTexture, window);
     else
         topSprite.setColor(sf::Color::Magenta);
-    if (pantsTexture.loadFromFile("textur/player_pants.png"))
+    if (pantsTexture.loadFromFile("texture/player_pants.png"))
         prepare(pantsSprite, pantsTexture, window);
     else
         pantsSprite.setColor(sf::Color::Magenta);
-    /*if (hairTexture.loadFromFile("textur/hair_1.png")) prepare(hairSprite, hairTexture, window);
-        else hairSprite.setColor(sf::Color::Magenta);
-    if (shoesTexture.loadFromFile("textur/shoes_1.png")) prepare(shoesSprite, shoesTexture, window);
-        else shoesSprite.setColor(sf::Color::Magenta);*/
+    if (hairTexture.loadFromFile("texture/player_hair.png")) 
+        prepare(hairSprite, hairTexture, window);
+    else 
+        hairSprite.setColor(sf::Color::Magenta);
+    if (shoesTexture.loadFromFile("texture/player_shoes.png")) 
+        prepare(shoesSprite, shoesTexture, window);
+    else 
+        shoesSprite.setColor(sf::Color::Magenta);
 }
 
 // makes sure, that the player and the clothes correctly set up
@@ -73,8 +77,8 @@ void Player::changeTexture(int row, int col)
     characterSprite.setTextureRect(sf::IntRect(row * 32, col * 64, 32, 64));
     topSprite.setTextureRect(sf::IntRect(row * 32, col * 64, 32, 64));
     pantsSprite.setTextureRect(sf::IntRect(row * 32, col * 64, 32, 64));
-    // hairSprite.setTextureRect(sf::IntRect(row * 32, col * 64, 32, 64));
-    // shoesSprite.setTextureRect(sf::IntRect(row * 32, col * 64, 32, 64));
+    hairSprite.setTextureRect(sf::IntRect(row * 32, col * 64, 32, 64));
+    shoesSprite.setTextureRect(sf::IntRect(row * 32, col * 64, 32, 64));
 }
 
 void Player::update(float deltaTime)
@@ -92,7 +96,8 @@ void Player::draw()
         window.draw(topSprite);
     if (pants_on)
         window.draw(pantsSprite);
-    // if(shoes_on) window.draw(shoesSprite);
+    if(shoes_on) 
+        window.draw(shoesSprite);
 }
 
 void Player::animate(float deltaTime)
@@ -118,15 +123,15 @@ void Player::animate(float deltaTime)
         hairSprite.setScale(-size, size);
         topSprite.setScale(-size, size);
         pantsSprite.setScale(-size, size);
-        // shoesSprite.setScale(-size, size);
+        shoesSprite.setScale(-size, size);
         break;
     case Right:
         column = 1;
         characterSprite.setScale(size, size);
         topSprite.setScale(size, size);
         pantsSprite.setScale(size, size);
-        // hairSprite.setScale(size, size);
-        // shoesSprite.setScale(size, size);
+        hairSprite.setScale(size, size);
+        shoesSprite.setScale(size, size);
         break;
     }
     /*walkcycle-logic.
@@ -219,8 +224,8 @@ void Player::handleInput(float deltaTime)
     characterSprite.move(movement * (speed * 100.f) * deltaTime);
     topSprite.move(movement * (speed * 100.f) * deltaTime);
     pantsSprite.move(movement * (speed * 100.f) * deltaTime);
-    /*hairSprite.move(movement * speed * deltaTime);
-    shoesSprite.move(movement * speed * deltaTime);*/
+    hairSprite.move(movement * (speed * 100.f) * deltaTime);
+    shoesSprite.move(movement * (speed * 100.f) * deltaTime);
 
     // direction determination for the walk cycle function
     if (movement.x < 0.0f) setDirection(Left);

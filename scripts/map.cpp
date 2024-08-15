@@ -65,7 +65,7 @@ void Map::loadTilemapFromFile(const std::string& filename)
 
 void Map::loadTextures()
 {
-    tilemapTexture.loadFromFile("textur/tilemap.png");
+    tilemapTexture.loadFromFile("texture/tilemap.png");
     textures.resize(sheetRows);
     for (int row = 0; row < sheetRows; row++)
     {

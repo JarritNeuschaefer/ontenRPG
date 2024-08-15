@@ -13,9 +13,8 @@
 
 int main()
 {
-    // Initialisierung des Spiels
+    //Initialisation
     //custom Shortcut in vsCode: STRG + SHIFT + B
-
 
     bool oPressed = false;
     bool pPressed = false;
@@ -44,7 +43,7 @@ int main()
     //cursor
 
     sf::Texture cursorTexture;
-    if (!cursorTexture.loadFromFile("textur/cursor.png")) { return EXIT_FAILURE; }
+    if (!cursorTexture.loadFromFile("texture/cursor.png")) { return EXIT_FAILURE; }
     sf::Cursor cursor;
     if (!cursor.loadFromPixels(cursorTexture.copyToImage().getPixelsPtr(), cursorTexture.getSize(), {0, 0})) { return EXIT_FAILURE;}
     window.setMouseCursor(cursor);
@@ -54,7 +53,7 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
 {
-            // Ereignisbehandlung
+            // Events
             if (event.type == sf::Event::Closed)
             {
                 window.close();
@@ -95,7 +94,7 @@ int main()
         }
 
 
-        // Aktualisierung
+        // updates
         float deltaTime = clock.restart().asSeconds();
         player.update(deltaTime);
         cam.Update(deltaTime, player.getPosition());
