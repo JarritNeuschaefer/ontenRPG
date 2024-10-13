@@ -1,2 +1,2 @@
 # ontenRPG
-WIP Project of a simple RPG made in c++
+currently continued in a different repository
