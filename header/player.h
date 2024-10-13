@@ -41,8 +41,6 @@ private:
     sf::Sprite topSprite;
     sf::Sprite shoesSprite;
     sf::Sprite hairSprite;
-
-    
 };
 
 #endif

@@ -11,6 +11,7 @@
 #include <info.h>
 #include <map.h>
 #include <log.h>
+#include <collision_tile.h>
 
 int main()
 {
@@ -40,6 +41,7 @@ int main()
     tileSelector.setFillColor(sf::Color::Transparent);
     tileSelector.setOutlineThickness(1.f);
     tileSelector.setOutlineColor(sf::Color::Blue);
+    collision_tile tile;
 
     //cursor
 
@@ -121,6 +123,7 @@ int main()
         map.draw(cam);
         window.draw(tileSelector);
         player.draw();
+        tile.draw(window);
 
         window.setView(window.getDefaultView()); // Render UI
 
